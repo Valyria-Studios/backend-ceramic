@@ -1,6 +1,13 @@
 {
   "devDependencies": {
     "@composedb/devtools": "^0.7.1",
-    "@composedb/devtools-node": "^0.7.1"
+    "@composedb/devtools-node": "^0.7.1",
+    "@composedb/types": "^0.7.1"
+  },
+  "dependencies": {
+    "@composedb/client": "^0.7.1",
+    "@didtools/pkh-ethereum": "^0.5.0",
+    "did-session": "^3.1.0",
+    "ethers": "^6.11.1"
   }
 }

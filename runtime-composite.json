@@ -1,0 +1,21 @@
+{
+  "models": {
+    "SimpleProfile": {
+      "interface": false,
+      "implements": [],
+      "id": "kjzl6hvfrbw6c68sr15k3vhzr2fq9vmwu5qcd749f8riatlhlvzoz3jj22ffb6c",
+      "accountRelation": { "type": "single" }
+    }
+  },
+  "objects": {
+    "SimpleProfile": {
+      "email": { "type": "string", "required": true, "immutable": false },
+      "displayName": { "type": "string", "required": true, "immutable": false },
+      "controller": { "type": "view", "viewType": "documentAccount" }
+    }
+  },
+  "enums": {},
+  "accountData": {
+    "simpleProfile": { "type": "node", "name": "SimpleProfile" }
+  }
+}
