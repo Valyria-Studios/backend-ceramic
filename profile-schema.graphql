@@ -1,5 +1,6 @@
 type SimpleProfile
   @createModel(accountRelation: SINGLE, description: "Very basic profile") {
-  account:
+  controller: DID! @documentAccount
   displayName: String! @string(minLength: 3, maxLength: 50)
+  email: String! @string(minLength: 3, maxLength: 100)
 }
