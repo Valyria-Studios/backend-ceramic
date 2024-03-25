@@ -3,9 +3,7 @@ import { DIDSession } from "did-session";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
 import compose from "./compose.mjs";
 
-const ethProvider = ethers.getDefaultProvider(
-  "https://mainnet.infura.io/v3/6c86fb62030b445d93ca8a5612253219"
-);
+const ethProvider = '';
 
 const addresses = await ethProvider.request({ method: "eth_requestAccounts" });
 const accountId = await getAccountId(ethProvider, addresses[0]);
