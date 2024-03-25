@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ethers } from "ethers";
-import { useEthereum } from "./ethereumContext"; // Adjust the import path as necessary
+import { useEthereum } from "./ethereumContext";
 
 const ConnectWalletButton = () => {
   const { setProvider, setUserAddress, userAddress } = useEthereum();
 
+  useEffect(() => {
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        console.log("Please connect to MetaMask.");
+        setUserAddress("");
+      } else if (accounts[0] !== userAddress) {
+        const account = ethers.getAddress(accounts[0]);
+        setUserAddress(account);
+        console.log("Switched account:", account);
+      }
+    };
+
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+    }
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+      }
+    };
+  }, [userAddress, setUserAddress]);
+
   const connectWalletHandler = async () => {
     if (window.ethereum) {
       try {
-        // Request access to the user's ETH accounts
+        await window.ethereum.request({
+          method: "wallet_requestPermissions",
+          params: [{ eth_accounts: {} }],
+        });
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        // Use the first account
         const account = ethers.getAddress(accounts[0]);
         setUserAddress(account);
-
-        // Wrap window.ethereum with a Web3Provider and set it in your context
-        const web3Provider = new ethers.BrowserProvider(window.ethereum);
-        setProvider(web3Provider);
-
-        // Optionally, log the connected account and provider for verification
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        setProvider(provider);
         console.log("Connected account:", account);
-        console.log("Provider set:", web3Provider);
       } catch (error) {
         console.error("Failed to connect MetaMask:", error);
       }
@@ -33,12 +57,22 @@ const ConnectWalletButton = () => {
     }
   };
 
+  const signOutHandler = () => {
+    // "Sign out" by resetting the application state related to the user
+    setUserAddress("");
+    setProvider(null);
+    console.log("User signed out");
+  };
+
   return (
     <div>
       {userAddress ? (
-        <p>
-          Connected with: <strong>{userAddress}</strong>
-        </p>
+        <>
+          <p>
+            Connected with: <strong>{userAddress}</strong>
+          </p>
+          <button onClick={signOutHandler}>Sign Out</button>
+        </>
       ) : (
         <button onClick={connectWalletHandler}>Connect to MetaMask</button>
       )}
