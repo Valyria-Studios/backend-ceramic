@@ -3,8 +3,8 @@
     "SimpleProfile": {
       "interface": false,
       "implements": [],
-      "id": "kjzl6hvfrbw6c68sr15k3vhzr2fq9vmwu5qcd749f8riatlhlvzoz3jj22ffb6c",
-      "accountRelation": { "type": "single" }
+      "id": "kjzl6hvfrbw6c5tsbap814c0ytsebu5p6soulmfy3xq64p7akzhvly38jkt8flu",
+      "accountRelation": { "type": "list" }
     }
   },
   "objects": {
@@ -16,6 +16,6 @@
   },
   "enums": {},
   "accountData": {
-    "simpleProfile": { "type": "node", "name": "SimpleProfile" }
+    "simpleProfileList": { "type": "connection", "name": "SimpleProfile" }
   }
 }
