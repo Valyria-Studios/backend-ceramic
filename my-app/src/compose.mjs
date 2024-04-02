@@ -34,8 +34,6 @@ export async function getInfo(compose) {
         }
       }
     `);
-    console.log("Full response:", response); // Log the full response
-    console.log("Data:", response.data.simpleProfileIndex.edges); // Access and log the data property correctly
     return response;
   } catch (error) {
     console.error("Query execution error:", error);

@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import { ethers } from "ethers";
-import { useEthereum } from "./ethereumContext";
+import { useEthereum } from "./ethereumContext.js";
+import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
+import { DIDSession } from "did-session";
+import compose from "./compose.mjs";
 
 const ConnectWalletButton = () => {
-  const { setProvider, setUserAddress, userAddress } = useEthereum();
+  const { setProvider, setUserAddress, userAddress, setAuthMethod } =
+    useEthereum();
 
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
@@ -39,14 +43,29 @@ const ConnectWalletButton = () => {
           method: "wallet_requestPermissions",
           params: [{ eth_accounts: {} }],
         });
-        const accounts = await window.ethereum.request({
+        const ethProvider = window.ethereum;
+        console.log("ethProvider", ethProvider);
+        setProvider(ethProvider);
+        const addresses = await ethProvider.request({
           method: "eth_requestAccounts",
         });
-        const account = ethers.getAddress(accounts[0]);
-        setUserAddress(account);
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        setProvider(provider);
-        console.log("Connected account:", account);
+        console.log("addresses", addresses[0]);
+        setUserAddress(addresses[0]);
+
+        // const accounts = await window.ethereum.request({
+        //   method: "eth_requestAccounts",
+        // });
+        // const account = ethers.getAddress(accounts[0]);
+        // setUserAddress(account);
+        // const BrowserProvider = new ethers.BrowserProvider(
+        //   window.ethereum,
+        //   "any"
+        // );
+        // const signer = BrowserProvider.getSigner();
+        // console.log("signer", signer);
+        // setProvider(signer);
+
+        // await setAuthMethod(authMethod);
       } catch (error) {
         console.error("Failed to connect MetaMask:", error);
       }

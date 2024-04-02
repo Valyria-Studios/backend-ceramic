@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import ConnectWalletButton from "./connectWallet";
-import { EthereumProvider } from "./ethereumContext";
+import ConnectWalletButton from "./connectWallet.js";
 import { getInfo } from "./compose.mjs"; // Ensure this path is correct
 import compose from "./compose.mjs";
+import { useTest } from "./ethereumWallet.mjs";
 
 function App() {
-  // Initialize state to hold profiles
   const [profiles, setProfiles] = useState([]);
-
+  useTest();
   useEffect(() => {
     // Define an async function to fetch the data
     const fetchInfo = async () => {
@@ -34,32 +33,30 @@ function App() {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-    <EthereumProvider>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <ConnectWalletButton />
-          Learn React
-          {/* Render profile information */}
-          <div>
-            <h2>Profiles</h2>
-            {profiles.map((profile) => (
-              <div key={profile.id}>
-                <p>
-                  <strong>DisplayName:</strong> {profile.displayName}
-                </p>
-                <p>
-                  <strong>Email:</strong> {profile.email}
-                </p>
-              </div>
-            ))}
-          </div>
-        </header>
-      </div>
-    </EthereumProvider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <ConnectWalletButton />
+        Learn React
+        {/* Render profile information */}
+        <div>
+          <h2>Profiles</h2>
+          {profiles.map((profile) => (
+            <div key={profile.id}>
+              <p>
+                <strong>DisplayName:</strong> {profile.displayName}
+              </p>
+              <p>
+                <strong>Email:</strong> {profile.email}
+              </p>
+            </div>
+          ))}
+        </div>
+      </header>
+    </div>
   );
 }
 
