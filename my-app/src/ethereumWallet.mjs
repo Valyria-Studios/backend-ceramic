@@ -19,25 +19,16 @@ export function useTest() {
           provider,
           accountId
         );
-
         const session = await DIDSession.get(userAddress, authMethod, {
           resources: compose.resources,
         });
-
-        console.log("session", session);
-        console.log("sessiondid", session.did);
-        console.log("sessionAuthorizations", session.authorizations);
-
-        const composeDid = compose.setDID(session.did);
-        setSessionDid(session.did.id);
+        compose.setDID(session.did);
+        setSessionDid(session.did);
       } catch (error) {
         console.error("Failed to establish session:", error);
         setSessionDid(null);
       }
     }
-
     establishSession();
-  }, [provider, userAddress]);
-  console.log(sessionDid);
-  return sessionDid;
+  }, [provider, userAddress, sessionDid]);
 }

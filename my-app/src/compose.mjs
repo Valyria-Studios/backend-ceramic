@@ -39,5 +39,62 @@ export async function getInfo(compose) {
     console.error("Query execution error:", error);
   }
 }
+export async function createProfile(inputData, compose) {
+  const mutation = `
+      mutation {
+      createSimpleProfile(input:{
+        content: {
+          email: "${inputData.email}"
+          displayName: "${inputData.displayName}"
+        }
+      })
+      {
+        document{
+        id
+        controller{
+          id
+        }
+        email
+        displayName
+      }}
+    }
+    `;
+  try {
+    const response = await compose.executeQuery(mutation);
+    return response;
+  } catch (error) {
+    console.error("Query execution error:", error);
+  }
+}
+
+export async function updateProfile(selectedId, inputData, compose) {
+  const update = `
+  mutation {
+    updateSimpleProfile(input:{
+      id: "${selectedId}"
+      content: {
+        email: "${inputData.email}"
+        displayName: "${inputData.displayName}"
+      }
+    })
+    {
+      document {
+        id
+        controller {
+          id
+        }
+        email
+        displayName
+      }
+    }
+  }
+  `;
+  try {
+    const response = await compose.executeQuery(update);
+    return response;
+  } catch (error) {
+    console.error("Query execution error:", error);
+  }
+}
 
 export default compose;

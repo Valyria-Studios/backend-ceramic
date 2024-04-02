@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { ethers } from "ethers";
 import { useEthereum } from "./ethereumContext.js";
-import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
-import { DIDSession } from "did-session";
-import compose from "./compose.mjs";
 
 const ConnectWalletButton = () => {
-  const { setProvider, setUserAddress, userAddress, setAuthMethod } =
+  const { setProvider, setUserAddress, userAddress } =
     useEthereum();
 
   useEffect(() => {
