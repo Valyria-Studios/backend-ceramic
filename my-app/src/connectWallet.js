@@ -44,28 +44,11 @@ const ConnectWalletButton = () => {
           params: [{ eth_accounts: {} }],
         });
         const ethProvider = window.ethereum;
-        console.log("ethProvider", ethProvider);
         setProvider(ethProvider);
         const addresses = await ethProvider.request({
           method: "eth_requestAccounts",
         });
-        console.log("addresses", addresses[0]);
         setUserAddress(addresses[0]);
-
-        // const accounts = await window.ethereum.request({
-        //   method: "eth_requestAccounts",
-        // });
-        // const account = ethers.getAddress(accounts[0]);
-        // setUserAddress(account);
-        // const BrowserProvider = new ethers.BrowserProvider(
-        //   window.ethereum,
-        //   "any"
-        // );
-        // const signer = BrowserProvider.getSigner();
-        // console.log("signer", signer);
-        // setProvider(signer);
-
-        // await setAuthMethod(authMethod);
       } catch (error) {
         console.error("Failed to connect MetaMask:", error);
       }
