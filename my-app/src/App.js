@@ -4,9 +4,11 @@ import "./App.css";
 import ConnectWalletButton from "./connectWallet.js";
 import { createProfile, getInfo, updateProfile } from "./compose.mjs"; // Ensure this path is correct
 import compose from "./compose.mjs";
-import { useTest } from "./ethereumWallet.mjs";
+import { useEthereum } from "./ethereumContext.js";
+import { UseSession } from "./ethereumWallet.mjs";
 
 function App() {
+  const { sessionDid } = useEthereum();
   const [profiles, setProfiles] = useState([]);
   const [inputData, setInputData] = useState({
     email: "",
@@ -16,9 +18,14 @@ function App() {
   const [editProfileId, setEditProfileId] = useState(null); // Track which profile is being edited
   const [editData, setEditData] = useState({ email: "", displayName: "" }); // Track edit inputs
 
-  // Existing functions...
+  UseSession();
 
-  useTest();
+  useEffect(() => {
+    if (sessionDid) {
+      // This check ensures that sessionDid is not null or undefined
+      console.log("sessionDid", sessionDid);
+    }
+  }, [sessionDid]);
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +59,6 @@ function App() {
   const saveEdit = async (id) => {
     if (compose) {
       try {
-
         await updateProfile(id, editData, compose);
         setEditProfileId(null); // Exit edit mode
         setFetchTrigger(!fetchTrigger);

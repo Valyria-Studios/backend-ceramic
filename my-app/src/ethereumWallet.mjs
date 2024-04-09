@@ -2,12 +2,11 @@ import { DIDSession } from "did-session";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
 import compose from "./compose.mjs";
 import { useEthereum } from "./ethereumContext.js";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // Other imports remain the same
 
-export function useTest() {
-  const { provider, userAddress } = useEthereum();
-  const [sessionDid, setSessionDid] = useState("");
+export function UseSession() {
+  const { provider, userAddress, setSessionDid } = useEthereum();
 
   useEffect(() => {
     async function establishSession() {
@@ -30,5 +29,5 @@ export function useTest() {
       }
     }
     establishSession();
-  }, [provider, userAddress, sessionDid]);
+  }, [provider, userAddress, setSessionDid]);
 }

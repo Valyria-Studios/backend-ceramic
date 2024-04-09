@@ -3,8 +3,7 @@ import { ethers } from "ethers";
 import { useEthereum } from "./ethereumContext.js";
 
 const ConnectWalletButton = () => {
-  const { setProvider, setUserAddress, userAddress } =
-    useEthereum();
+  const { setProvider, setUserAddress, userAddress } = useEthereum();
 
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
